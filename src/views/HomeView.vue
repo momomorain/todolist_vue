@@ -63,9 +63,8 @@ export default {
   mounted() {
     // 當網頁開啟後，先執行裡面的JS
     // 先把資料從localStorage 特定Key拿出資料來，丟入msgArr裡面
-    console.log(123);
     if (localStorage.getItem('msg')) {
-      this.todoList = JSON.parse(localStorage.getItem('msg'))
+      this.todoList = JSON.parse(localStorage.getItem('msg'));
     }
 
   },
@@ -73,7 +72,6 @@ export default {
     // 預處理拿到的資料有暫存功能，所以我們可以拿整包資料，利用判斷式把資料篩選
     filterData() {
       
-      console.log(this.selectedTab === 'all');
       if (this.selectedTab === 'all') {
         return this.todoList;
       } else if (this.selectedTab === 'is-todo') {
