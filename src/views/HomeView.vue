@@ -106,7 +106,7 @@ export default {
           <th class="text-white text-center">事項</th>
           <th class="text-white text-center">功能</th>
         </tr>
-        <tr v-for="(item, index) in filterData" :key="index">
+        <tr v-for="(item, index) in filterData" :key="item.id">
           <td class="text-white text-center mt-3">
             <input v-model="item.check"  type="checkbox" class="ml-18">
           </td>
