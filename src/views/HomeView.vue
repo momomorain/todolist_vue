@@ -5,14 +5,11 @@ export default {
   data() {
     return {
       addText: '',
-      todoList: [
-
-      ],
+      todoList: [],
       selectedTab: '',
     };
   },
   methods: {
-
     addItemList() {
       let listID = 0;
       if (this.todoList.length !== 0) {
@@ -29,8 +26,9 @@ export default {
         }
         this.todoList.push(item);
         console.log(this.todoList);
-      }
-      localStorage.setItem('msg', JSON.stringify(this.todoList))
+        localStorage.setItem('msg', JSON.stringify(this.todoList));
+        this.addText="";
+      };
     },
     getInputValue(e) {
       this.addText = e.target.value;
@@ -43,8 +41,9 @@ export default {
         this.todoList[id].text = content;
       }
     },
-    deleter(id) {
+    deleteArr(id) {
       this.todoList.splice(id, 1);
+      localStorage.setItem('msg', JSON.stringify(this.todoList));
     },
     changTab(string) {
       this.selectedTab = string;
@@ -56,22 +55,30 @@ export default {
         item.text = item.editMsg;
       }
       if (item.editSwitch === true) {
-        todoList.editMsg = item.editMsg;
+        item.editMsg = item.text;
       }
+      localStorage.setItem('msg', JSON.stringify(this.todoList))
     }
   },
   mounted() {
     // 當網頁開啟後，先執行裡面的JS
     // 先把資料從localStorage 特定Key拿出資料來，丟入msgArr裡面
     console.log(123);
+    if(localStorage.getItem('msg')){
+      this.todoList = JSON.parse(localStorage.getItem('msg'))
+    }
 
   },
   computed: {
-    fileterData() {
-      if (!this.selectedTab) {
+    // 預處理拿到的資料有暫存功能，所以我們可以拿整包資料，利用判斷式把資料篩選
+    filterData() {
+      if (this.selectedTab === 'all') {
         return this.todoList;
+      }else if(this.selectedTab === 'is-todo'){
+        return this.todoList.filter(list => list.check === true);
+      }else if(this.selectedTab === 'not-todo'){
+        return this.todoList.filter(list => list.check === false);
       }
-      return this.todoList.filter(list => list.check === this.selectedTab);
     }
   }
 }
@@ -85,9 +92,9 @@ export default {
         <button class="button bg-zinc-600" @click="addItemList">新增</button>
       </div>
       <div class="flex gap-4">
-        <button type="button" class="button bg-zinc-500" @click="changTab('')">全部</button>
-        <button type="button" class="button bg-zinc-500" @click="changTab('')">已執行</button>
-        <button type="button" class="button bg-zinc-500" @click="changTab('')">未執行</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab ='all'">全部</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'is-todo'">已執行</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'not-todo'">未執行</button>
         <button type="button" class="button bg-zinc-600">記住我?</button>
       </div>
       <table class="w-full">
@@ -109,7 +116,7 @@ export default {
           <td class="text-white text-center">
             <!-- <button class="button bg-zinc-500" @click="edit(index)">編輯</button> -->
             <button class="button bg-zinc-500" @click="editMsg(item)">編輯</button>
-            <button class="button bg-zinc-500 ml-2" @click="deleter(index)">刪除</button>
+            <button class="button bg-zinc-500 ml-2" @click="deleteArr(index)">刪除</button>
           </td>
         </tr>
       </table>
@@ -125,6 +132,8 @@ export default {
 .button:hover {
   @apply bg-zinc-700;
 }
+
+
 </style>
 
 
