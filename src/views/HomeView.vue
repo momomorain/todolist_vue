@@ -72,6 +72,8 @@ export default {
   computed: {
     // 預處理拿到的資料有暫存功能，所以我們可以拿整包資料，利用判斷式把資料篩選
     filterData() {
+      
+      console.log(this.selectedTab === 'all');
       if (this.selectedTab === 'all') {
         return this.todoList;
       } else if (this.selectedTab === 'is-todo') {
@@ -103,9 +105,9 @@ export default {
           <th class="text-white text-center">事項</th>
           <th class="text-white text-center">功能</th>
         </tr>
-        <tr v-for="(item, index) in todoList" :key="index">
+        <tr v-for="(item, index) in filterData" :key="index">
           <td class="text-white text-center mt-3">
-            <input v-model="todoList.check" type="checkbox" class="ml-18">
+            <input v-model="todoList[index].check" type="checkbox" class="ml-18">
           </td>
           <td v-if="item.editSwitch === false" class="text-white text-center ">{{ item.text }}</td>
           <td v-else class="text-black text-center ">
