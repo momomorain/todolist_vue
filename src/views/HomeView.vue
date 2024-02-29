@@ -6,7 +6,7 @@ export default {
     return {
       addText: '',
       todoList: [],
-      selectedTab: '',
+      selectedTab: 'all',
     };
   },
   methods: {
@@ -71,7 +71,7 @@ export default {
   computed: {
     // 預處理拿到的資料有暫存功能，所以我們可以拿整包資料，利用判斷式把資料篩選
     filterData() {
-      
+      console.log(this.todoList);
       if (this.selectedTab === 'all') {
         return this.todoList;
       } else if (this.selectedTab === 'is-todo') {
@@ -92,9 +92,12 @@ export default {
         <button class="button bg-zinc-600" @click="addItemList">新增</button>
       </div>
       <div class="flex gap-4">
-        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'all'">全部</button>
-        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'is-todo'">已執行</button>
-        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'not-todo'">未執行</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'all'"
+          :class="{ 'active': selectedTab === 'all' }">全部</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'is-todo'"
+          :class="{ 'active': selectedTab === 'is-todo' }">已執行</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'not-todo'"
+          :class="{ 'active': selectedTab === 'not-todo' }">未執行</button>
         <button type="button" class="button bg-zinc-600">記住我?</button>
       </div>
       <table class="w-full">
@@ -105,7 +108,7 @@ export default {
         </tr>
         <tr v-for="(item, index) in filterData" :key="index">
           <td class="text-white text-center mt-3">
-            <input v-model="todoList[index].check" type="checkbox" class="ml-18">
+            <input v-model="item.check"  type="checkbox" class="ml-18">
           </td>
           <td v-if="item.editSwitch === false" class="text-white text-center ">{{ item.text }}</td>
           <td v-else class="text-black text-center ">
@@ -131,6 +134,10 @@ export default {
 
 .button:hover {
   @apply bg-zinc-700;
+}
+
+.active {
+  @apply bg-white text-black;
 }
 </style>
 
