@@ -27,7 +27,7 @@ export default {
         this.todoList.push(item);
         console.log(this.todoList);
         localStorage.setItem('msg', JSON.stringify(this.todoList));
-        this.addText="";
+        this.addText = "";
       };
     },
     getInputValue(e) {
@@ -64,7 +64,7 @@ export default {
     // 當網頁開啟後，先執行裡面的JS
     // 先把資料從localStorage 特定Key拿出資料來，丟入msgArr裡面
     console.log(123);
-    if(localStorage.getItem('msg')){
+    if (localStorage.getItem('msg')) {
       this.todoList = JSON.parse(localStorage.getItem('msg'))
     }
 
@@ -74,9 +74,9 @@ export default {
     filterData() {
       if (this.selectedTab === 'all') {
         return this.todoList;
-      }else if(this.selectedTab === 'is-todo'){
+      } else if (this.selectedTab === 'is-todo') {
         return this.todoList.filter(list => list.check === true);
-      }else if(this.selectedTab === 'not-todo'){
+      } else if (this.selectedTab === 'not-todo') {
         return this.todoList.filter(list => list.check === false);
       }
     }
@@ -92,7 +92,7 @@ export default {
         <button class="button bg-zinc-600" @click="addItemList">新增</button>
       </div>
       <div class="flex gap-4">
-        <button type="button" class="button bg-zinc-500" @click="selectedTab ='all'">全部</button>
+        <button type="button" class="button bg-zinc-500" @click="selectedTab = 'all'">全部</button>
         <button type="button" class="button bg-zinc-500" @click="selectedTab = 'is-todo'">已執行</button>
         <button type="button" class="button bg-zinc-500" @click="selectedTab = 'not-todo'">未執行</button>
         <button type="button" class="button bg-zinc-600">記住我?</button>
@@ -132,8 +132,6 @@ export default {
 .button:hover {
   @apply bg-zinc-700;
 }
-
-
 </style>
 
 
